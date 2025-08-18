@@ -30,7 +30,7 @@ public class Category {
 
     @OneToMany(
             mappedBy = "category",
-            cascade = CascadeType.ALL, // Propaga operações: deletar uma categoria deleta seus livros)
+            cascade = CascadeType.ALL, // Propaga operações: deletar uma categoria deleta seus livros
             orphanRemoval = true
     )
     private List<Books> booksList;
