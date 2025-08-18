@@ -1,25 +1,16 @@
 package com.gabrielhidan.LivroLog.books.service;
 import com.gabrielhidan.LivroLog.books.entities.Books;
 import com.gabrielhidan.LivroLog.books.repository.BooksRepository;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BooksService {
 
-    @Autowired
     private final BooksRepository booksRepository;
-
-
 
     public List<Books> getAllBooks(){
         return booksRepository.findAll();
@@ -44,5 +35,15 @@ public class BooksService {
         }else{
             return;
         }
+    }
+
+
+    public Books updateBook(Long id , Books bookUpdate){
+        Optional<Books> getBook = booksRepository.findById(id);
+        if (getBook.isPresent()){
+            bookUpdate.setId(id);
+            return booksRepository.save(bookUpdate);
+        }
+        return null;
     }
 }
