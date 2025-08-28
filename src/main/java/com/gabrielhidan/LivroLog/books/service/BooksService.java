@@ -32,8 +32,6 @@ public class BooksService {
         Optional<Books> getBook = booksRepository.findById(id);
         if (getBook.isPresent()){
             booksRepository.deleteById(id);
-        }else{
-            return;
         }
     }
 

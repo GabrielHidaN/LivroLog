@@ -4,6 +4,7 @@ import com.gabrielhidan.LivroLog.books.entities.Books;
 import com.gabrielhidan.LivroLog.books.service.BooksService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/books")
-@Getter
-@Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BooksController {
 
 
-    @Autowired
     private final BooksService booksService;
 
     @PostMapping("/create")
