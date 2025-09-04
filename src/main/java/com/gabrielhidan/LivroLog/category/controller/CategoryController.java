@@ -18,17 +18,17 @@ public class CategoryController {
         return categoryService.createCategory(category);
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/{id}")
     public Category updateCategory (@PathVariable  Long id , @RequestBody Category category){
         return categoryService.updateCategory(id , category);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteCategory (@PathVariable Long id){
         categoryService.deleteCategory(id);
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public List<Category> getAllCategory(){
         return categoryService.getAllCategory();
     }

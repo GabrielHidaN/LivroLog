@@ -34,12 +34,12 @@ public class BooksController {
         return booksService.getBookById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
         booksService.deleteBook(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public Books updateBook(@PathVariable Long id ,@RequestBody Books bookUpdate){
         return booksService.updateBook(id, bookUpdate);
     }
