@@ -47,7 +47,7 @@ public class BooksService {
     public void deleteBook(Long id){
         Optional<Books> getBook = booksRepository.findById(id);
         if (getBook.isPresent()){
-            getBook.map(booksMapper::toDTO);
+            booksRepository.deleteById(id);
         }
     }
 
