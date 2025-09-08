@@ -1,4 +1,5 @@
 package com.gabrielhidan.LivroLog.category.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabrielhidan.LivroLog.books.entities.Books;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,10 +29,7 @@ public class Category {
     private String description;
 
 
-    @OneToMany(
-            mappedBy = "category",
-            cascade = CascadeType.ALL, // Propaga operações: deletar uma categoria deleta seus livros
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Books> booksList;
 }
