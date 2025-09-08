@@ -1,5 +1,5 @@
 package com.gabrielhidan.LivroLog.category.controller;
-import com.gabrielhidan.LivroLog.category.entities.Category;
+import com.gabrielhidan.LivroLog.category.dto.CategoryDTO;
 import com.gabrielhidan.LivroLog.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,12 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/create")
-    public Category createCategory(Long id , @RequestBody Category category){
+    public CategoryDTO createCategory(Long id , @RequestBody CategoryDTO category){
         return categoryService.createCategory(category);
     }
 
     @PostMapping("/{id}")
-    public Category updateCategory (@PathVariable  Long id , @RequestBody Category category){
+    public CategoryDTO updateCategory (@PathVariable  Long id , @RequestBody CategoryDTO category){
         return categoryService.updateCategory(id , category);
     }
 
@@ -29,12 +29,12 @@ public class CategoryController {
     }
 
     @GetMapping("/")
-    public List<Category> getAllCategory(){
+    public List<CategoryDTO> getAllCategory(){
         return categoryService.getAllCategory();
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById (@PathVariable Long id){
+    public CategoryDTO getCategoryById (@PathVariable Long id){
         return categoryService.getCategoryById(id);
     }
 }
