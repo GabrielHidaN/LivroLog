@@ -1,4 +1,5 @@
 package com.gabrielhidan.LivroLog.books.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gabrielhidan.LivroLog.category.entities.Category;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,8 +31,8 @@ public class Books {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @ManyToOne
+    @JoinColumn(name = "category_id" , nullable = false)
     private Category category;
 
 }

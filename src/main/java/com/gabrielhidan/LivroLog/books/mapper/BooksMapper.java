@@ -1,11 +1,14 @@
 package com.gabrielhidan.LivroLog.books.mapper;
 import com.gabrielhidan.LivroLog.books.dto.BooksDTO;
 import com.gabrielhidan.LivroLog.books.entities.Books;
+import com.gabrielhidan.LivroLog.category.dto.CategoryDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BooksMapper {
-    public Books map(BooksDTO booksDTO){
+    // DTO -> Entity
+
+    public Books toEntity(BooksDTO booksDTO){
         Books books = new Books();
 
         books.setId(booksDTO.getId());
@@ -18,7 +21,8 @@ public class BooksMapper {
         return books;
     }
 
-    public BooksDTO map(Books books){
+    // Entity -> DTO
+    public BooksDTO toDTO(Books books){
         BooksDTO booksDTO = new BooksDTO();
 
         booksDTO.setId(books.getId());

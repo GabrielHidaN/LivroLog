@@ -1,12 +1,8 @@
 package com.gabrielhidan.LivroLog.books.controller;
-
-import com.gabrielhidan.LivroLog.books.entities.Books;
+import com.gabrielhidan.LivroLog.books.dto.BooksDTO;
 import com.gabrielhidan.LivroLog.books.service.BooksService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,17 +16,17 @@ public class BooksController {
     private final BooksService booksService;
 
     @PostMapping("/create")
-    public Books createNewBook(@RequestBody Books books){
-        return  booksService.createNewBook(books);
+    public BooksDTO createNewBook(@RequestBody BooksDTO booksDTO){
+        return  booksService.createNewBook(booksDTO);
     }
 
     @GetMapping("/")
-    public List<Books> getAllBooks(){
+    public List<BooksDTO> getAllBooks(){
         return booksService.getAllBooks();
     }
 
     @GetMapping("/{id}")
-    public  Books getBookById(@PathVariable Long id){
+    public  BooksDTO getBookById(@PathVariable Long id){
         return booksService.getBookById(id);
     }
 
@@ -40,7 +36,7 @@ public class BooksController {
     }
 
     @PutMapping("/{id}")
-    public Books updateBook(@PathVariable Long id ,@RequestBody Books bookUpdate){
+    public BooksDTO updateBook(@PathVariable Long id ,@RequestBody BooksDTO bookUpdate){
         return booksService.updateBook(id, bookUpdate);
     }
 }
