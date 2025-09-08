@@ -1,31 +1,41 @@
 package com.gabrielhidan.LivroLog.category.service;
+import com.gabrielhidan.LivroLog.category.dto.CategoryDTO;
 import com.gabrielhidan.LivroLog.category.entities.Category;
+import com.gabrielhidan.LivroLog.category.mapper.CategoryMapper;
 import com.gabrielhidan.LivroLog.category.repository.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
-    public Category createCategory(Category category){
-        return categoryRepository.save(category);
+    public CategoryDTO createCategory(CategoryDTO categoryDTO){
+        Category category = categoryMapper.toEntity(categoryDTO);
+        category = categoryRepository.save(category);
+
+        return categoryMapper.toDTO(category);
     }
 
-    public List<Category> getAllCategory(){
-        return categoryRepository.findAll();
+    public List<CategoryDTO> getAllCategory(){
+        List<Category> categoryList = categoryRepository.findAll();
+        return categoryList.stream()
+                .map(categoryMapper::toDTO)
+                .collect(Collectors.toList());
+
     }
 
-    public Category getCategoryById(Long id){
+    public CategoryDTO getCategoryById(Long id){
         Optional<Category> getById = categoryRepository.findById(id);
         if (getById.isPresent()){
-            return getById.orElse(null);
+            return  getById.map(categoryMapper::toDTO).orElse(null);
         }
         return null;
     }
@@ -37,11 +47,13 @@ public class CategoryService {
         }
     }
 
-    public Category updateCategory (Long id , Category category){
+    public CategoryDTO updateCategory (Long id , CategoryDTO categoryDTO){
         Optional<Category> getById = categoryRepository.findById(id);
         if (getById.isPresent()){
-            category.setId(id);
-            return categoryRepository.save(category);
+            Category categoryUpdate = categoryMapper.toEntity(categoryDTO);
+            categoryUpdate.setId(id);
+            Category categorySave = categoryRepository.save(categoryUpdate);
+            return categoryMapper.toDTO(categorySave);
         }
         return null;
     }
