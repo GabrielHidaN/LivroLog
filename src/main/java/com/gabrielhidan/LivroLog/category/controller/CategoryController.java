@@ -2,6 +2,9 @@ package com.gabrielhidan.LivroLog.category.controller;
 import com.gabrielhidan.LivroLog.category.dto.CategoryDTO;
 import com.gabrielhidan.LivroLog.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,27 +17,50 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/create")
-    public CategoryDTO createCategory(Long id , @RequestBody CategoryDTO category){
-        return categoryService.createCategory(category);
+    public ResponseEntity<String> createCategory(Long id, @RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO category = categoryService.createCategory(categoryDTO);
+        return ResponseEntity.ok("Category Created Success!");
     }
 
-    @PostMapping("/{id}")
-    public CategoryDTO updateCategory (@PathVariable  Long id , @RequestBody CategoryDTO category){
-        return categoryService.updateCategory(id , category);
+
+    @GetMapping("/")
+    public ResponseEntity<List<CategoryDTO>> getAllCategory() {
+        List<CategoryDTO> category = categoryService.getAllCategory();
+        return ResponseEntity.ok(category);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+        CategoryDTO category = categoryService.getCategoryById(id);
+        if (category != null){
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .body(category);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Category not found!");
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory (@PathVariable Long id){
-        categoryService.deleteCategory(id);
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
+        CategoryDTO category = categoryService.getCategoryById(id);
+        if (category != null){
+            categoryService.deleteCategory(id);
+            return ResponseEntity.ok("Category Deleted Success!");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Category not found!");
+
     }
 
-    @GetMapping("/")
-    public List<CategoryDTO> getAllCategory(){
-        return categoryService.getAllCategory();
-    }
-
-    @GetMapping("/{id}")
-    public CategoryDTO getCategoryById (@PathVariable Long id){
-        return categoryService.getCategoryById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO category) {
+        CategoryDTO updateCategory = categoryService.updateCategory(id , category);
+        if(updateCategory != null){
+            return ResponseEntity.ok(updateCategory);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Category not found!");
     }
 }
+
