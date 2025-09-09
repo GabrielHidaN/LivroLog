@@ -44,11 +44,12 @@ public class BooksService {
         return null;
     }
 
-    public void deleteBook(Long id){
+    public BooksDTO deleteBook(Long id){
         Optional<Books> getBook = booksRepository.findById(id);
         if (getBook.isPresent()){
             booksRepository.deleteById(id);
         }
+        return null;
     }
 
 
