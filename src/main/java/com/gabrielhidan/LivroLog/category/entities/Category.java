@@ -29,7 +29,7 @@ public class Category {
     private String description;
 
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL, orphanRemoval = true) // se deletar uma categoria todos os livros dessa categoria tambem sera deletado!
     @JsonIgnore
     private List<Books> booksList;
 }
